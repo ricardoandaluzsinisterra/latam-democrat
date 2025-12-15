@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
+// Import routes
+const countriesRouter = require('./routes/countries');
+const achievementsRouter = require('./routes/achievements');
+const contactRouter = require('./routes/contact');
+
 const app = express();
 
 // Middleware
@@ -17,6 +22,10 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(() => console.log('✓ MongoDB connected'))
 .catch(err => console.log('✗ MongoDB error:', err));
 
+// Use routes
+app.use('/api/countries', countriesRouter);
+app.use('/api/achievements', achievementsRouter);
+app.use('/api/contact', contactRouter);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'Backend running ✓' });
