@@ -1,8 +1,16 @@
-#root {
-  max-width: auto;
+.App {
+  max-width: none;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 2rem 0; /* keep top/side padding, remove bottom space so footer sits flush */
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.App-main {
+  flex: 1 0 auto; /* main content grows to fill available space, pushing footer to bottom */
 }
 
 .logo {
@@ -119,7 +127,8 @@ input:focus, textarea:focus, select:focus {
 /* make Country Explorer content auto-size to available space */
 .country-explorer {
   width: auto;
-  max-width: auto;
+  max-width: none;
   margin: 0;
   padding: 0 2rem;
+  flex: 1 0 auto; /* allow explorer to grow and push footer down */
 }
