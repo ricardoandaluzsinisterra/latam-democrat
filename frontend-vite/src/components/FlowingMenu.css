@@ -1,6 +1,8 @@
 .menu-wrap {
-  width: 100%;
+  width: 1400px;
   height: 32vh; /* reduced to remove excess bottom space */
+  max-width: auto;
+  margin: 0 auto;
   overflow: hidden;
 }
 

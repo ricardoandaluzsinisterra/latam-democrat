@@ -34,8 +34,8 @@ body {
 
 /* flowing menu container: rounded and centered without changing layout */
 .menu-container {
-  max-width: 1300px;
-  margin: 1rem 1rem;
+  max-width: 1400px;
+  margin: 1rem auto;
   width: calc(100% - 3rem);
   border-radius: 12px;
   overflow: hidden; /* ensure menu respects radius */
@@ -116,9 +116,10 @@ input:focus, textarea:focus, select:focus {
   line-height: 1.05;
 }
 
-/* make Country Explorer content nearly full-width while keeping landing styles */
+/* make Country Explorer content auto-size to available space */
 .country-explorer {
-  width: calc(100vw - 4rem);
-  max-width: none;
-  margin: 0 auto;
+  width: auto;
+  max-width: auto;
+  margin: 0;
+  padding: 0 2rem;
 }
