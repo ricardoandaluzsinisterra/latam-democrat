@@ -8,6 +8,8 @@ interface MenuItemProps {
   link: string;
   text: string;
   image: string;
+  imageOffset?: string;
+  imageScale?: number;
 }
 
 interface FlowingMenuProps {
@@ -27,7 +29,7 @@ const FlowingMenu: React.FC<FlowingMenuProps> = ({ items = [], onItemClick }) =>
   );
 };
 
-const MenuItem: React.FC<MenuItemProps & { onItemClick?: (id?: string) => void }> = ({ id, link, text, image, onItemClick }) => {
+const MenuItem: React.FC<MenuItemProps & { onItemClick?: (id?: string) => void }> = ({ id, link, text, image, imageOffset, imageScale, onItemClick }) => {
   const itemRef = React.useRef<HTMLDivElement>(null);
   const marqueeRef = React.useRef<HTMLDivElement>(null);
   const marqueeInnerRef = React.useRef<HTMLDivElement>(null);
@@ -87,13 +89,22 @@ const MenuItem: React.FC<MenuItemProps & { onItemClick?: (id?: string) => void }
     return Array.from({ length: 4 }).map((_, idx) => (
       <React.Fragment key={idx}>
         <span>{text}</span>
-        <div
-          className="marquee__img"
-          style={{ backgroundImage: `url(${image})` }}
-        />
+        <div className="marquee__img">
+          <img
+            id={`marquee-photo-${id ?? idx}-${idx}`}
+            src={image}
+            alt={text}
+            className="marquee__photo"
+            data-country-id={id}
+            style={{
+              objectPosition: `50% ${imageOffset ?? "8%"}`,
+              transform: `translateY(0) scale(${imageScale ?? 1})`,
+            }}
+          />
+        </div>
       </React.Fragment>
     ));
-  }, [text, image]);
+  }, [text, image, imageOffset, imageScale, id]);
 
   return (
     <div className="menu__item" ref={itemRef}>
