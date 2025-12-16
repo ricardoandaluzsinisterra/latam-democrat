@@ -20,9 +20,10 @@ interface Country {
 }
 
 export default function CountryExplorer() {
-  const [countries, setCountries] = useState<Country[]>([]);
+  const [countries, setCountries] = useState<Country[]>(
+    (localCountries as unknown as Country[]) || []
+  );
   const [loading, setLoading] = useState(true);
-  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
 
   useEffect(() => {
     fetchCountries();
@@ -52,6 +53,12 @@ export default function CountryExplorer() {
 
   if (loading) return <div>Loading...</div>;
 
+  const slugify = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
   const menuItems = countries.map((country) => {
     // per-country vertical image offsets for fine tuning (adjust as needed)
     const offsets: Record<string, string> = {
@@ -61,9 +68,10 @@ export default function CountryExplorer() {
       "Mexico - Indigenous Rights & Democratic Constitutionalism": "42%",
     };
 
+    const idKey = ((country as unknown) as { _id?: string })._id ?? slugify(country.name);
     return {
-      id: country._id,
-      link: "#",
+      id: idKey,
+      link: `/countries/${encodeURIComponent(idKey)}`,
       text: country.name,
       image: country.imageUrl || "",
       imageOffset: offsets[country.name] ?? "8%",
@@ -77,8 +85,9 @@ export default function CountryExplorer() {
         <FlowingMenu
           items={menuItems}
           onItemClick={(id) => {
-            const country = countries.find((c) => c._id === id) || null;
-            setSelectedCountry(country);
+            if (!id) return
+            window.history.pushState({}, '', `/countries/${id}`)
+            window.dispatchEvent(new PopStateEvent('popstate'))
           }}
         />
       </div>
@@ -86,18 +95,6 @@ export default function CountryExplorer() {
       {/* Spotlight cards */}
       <SpotlightCards />
 
-      {selectedCountry && (
-        <div className="country-detail">
-          <h3>{selectedCountry.name}</h3>
-          <p>{selectedCountry.description}</p>
-          <h4>Key Achievements:</h4>
-          {selectedCountry.achievements.map((achievement) => (
-            <div key={achievement._id}>
-              <strong>{achievement.title}</strong>: {achievement.description}
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }

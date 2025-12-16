@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+  max-width: auto;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -34,7 +34,7 @@ body {
 
 /* flowing menu container: rounded and centered without changing layout */
 .menu-container {
-  max-width: 1400px;
+  max-width: 1300px;
   margin: 1rem 1rem;
   width: calc(100% - 3rem);
   border-radius: 12px;
@@ -114,4 +114,11 @@ input:focus, textarea:focus, select:focus {
   color: #000000;
   font-size: 2.6rem;
   line-height: 1.05;
+}
+
+/* make Country Explorer content nearly full-width while keeping landing styles */
+.country-explorer {
+  width: calc(100vw - 4rem);
+  max-width: none;
+  margin: 0 auto;
 }

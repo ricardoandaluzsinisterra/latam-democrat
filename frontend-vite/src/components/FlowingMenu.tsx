@@ -112,9 +112,21 @@ const MenuItem: React.FC<MenuItemProps & { onItemClick?: (id?: string) => void }
         className="menu__item-link"
         href={link}
         onClick={(e) => {
-          if (onItemClick) {
-            e.preventDefault();
-            onItemClick(id);
+          // allow normal browser behavior for modified clicks / non-left clicks (open in new tab/window)
+          const evt = e as React.MouseEvent<HTMLAnchorElement>
+          const isModified = evt.metaKey || evt.ctrlKey || evt.shiftKey || evt.altKey || evt.button !== 0
+          if (onItemClick && !isModified) {
+            e.preventDefault()
+            // prefer delegating navigation to caller, but also update history here for reliability
+            onItemClick(id)
+            try {
+              const href = link.startsWith('/') ? link : '/' + link
+              window.history.pushState({}, '', href)
+              // emit a lightweight custom event to notify SPA routers
+              window.dispatchEvent(new Event('app:navigated'))
+            } catch {
+              /* ignore in non-browser contexts */
+            }
           }
         }}
         onMouseEnter={handleMouseEnter}
