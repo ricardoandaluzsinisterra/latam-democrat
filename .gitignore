@@ -57,3 +57,6 @@ Thumbs.db
 # Optional: lockfiles should be committed to lock dependency versions.
 # Do NOT ignore package-lock.json, yarn.lock or pnpm-lock.yaml
 # (They ensure reproducible installs and should be tracked.)
+terraform/terraform.tfstate
+terraform/terraform.tfvars
+terraform/.terraform/
