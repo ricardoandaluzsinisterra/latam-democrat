@@ -17,9 +17,9 @@ export default function ContactForm() {
 
   const onSubmit = async (data: FormData) => {
     setError(null)
-    try {
+      try {
       console.log('[contact] payload', JSON.stringify(data))
-      await axios.post('http://localhost:5000/api/contact', data)
+      await axios.post('/api/contact', data)
       setSubmitted(true)
       reset()
       setTimeout(() => setSubmitted(false), 5000)

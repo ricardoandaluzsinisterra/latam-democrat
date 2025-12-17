@@ -33,7 +33,7 @@ export default function CountryExplorer() {
   const fetchCountries = async () => {
     try {
       const response = await axios.get<Country[]>(
-        "http://localhost:5000/api/countries"
+        "/api/countries"
       );
       setCountries(response.data);
       setLoading(false);

@@ -36,7 +36,7 @@ export default function CountryPage({ id }: { id: string }) {
       try {
         // Try slug endpoint first (if backend supports it)
         try {
-          const resp = await axios.get<Country>(`http://localhost:5000/api/countries/slug/${resolvedId}`)
+          const resp = await axios.get<Country>(`/api/countries/slug/${resolvedId}`)
           if (mounted && resp?.data) {
             setCountry(resp.data)
             setLoading(false)
@@ -48,7 +48,7 @@ export default function CountryPage({ id }: { id: string }) {
 
         // Try direct id endpoint
         try {
-          const resp = await axios.get<Country>(`http://localhost:5000/api/countries/${resolvedId}`)
+          const resp = await axios.get<Country>(`/api/countries/${resolvedId}`)
           if (mounted && resp?.data) {
             setCountry(resp.data)
             setLoading(false)
